@@ -1,0 +1,123 @@
+﻿@{
+    ControleFinanc.Models.Grupo gp = ViewBag.Grupo;
+    string status;
+    if (gp.Status == 1)
+    {
+        status = "Ativo";
+    }
+    else
+    {
+        status = "Inativo ";
+    }
+
+    ViewBag.Title = "Editar";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="~/Content/Site.css">
+</head>
+<body>
+    <br>
+    <div class="container">
+        <!--FORMULÁRIO-->
+        <form name="Grupos" method="POST" action="/Grupo/Editar/@gp.Id" onsubmit="return ValidarCamposUsuarios()">
+            <div class="col-md-6 col-md-offset-3 formulario1">
+                <br>
+                <div class="col-md-12 text-center bg-primary">
+                    <div class="col-md-2">
+                        <h2><span class="glyphicon glyphicon-align-justify"></span></h2>
+                    </div>
+                    <div class="col-md-10">
+                        <h2>Edição de Usuários</h2>
+                    </div>
+                </div>
+
+                <!--ALERTA-->
+                @if (TempData["Sucesso"] != null)
+                {
+                    <br />
+                    <br />
+                    <div id="alerta" class="alert alert-success alert-dismissible col-md-12" role="alert">
+                        <strong>MENSAGEM: </strong> @TempData["Sucesso"]
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <script type="text/javascript">
+                        setTimeout(function () {
+                            $('#alerta').alert('close');
+                        }, 3000);
+                    </script>
+                }
+
+                <!--Retorna o erro-->
+                @if (TempData["Erro"] != null)
+                {
+                    <script type="text/javascript">
+                        alert("@TempData["Erro"]");
+                        window.history.back();
+                    </script>
+                }
+
+                <div class="col-md-12" hidden>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="Id" name="Id" value="@gp.Id">
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="Nome">
+                            Nome
+                        </label>
+                        <input type="text" class="form-control" id="Nome" name="Nome" value="@gp.Nome" placeholder="Informe o nome">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="Grupo">
+                        Status
+                    </label>
+                </div>
+
+                <div class="col-md-6">
+                    <select class="form-control" id="Status" name="Status">
+                        @if (@status == "Ativo")
+                        {
+                            <option value="1">Ativo</option>
+                            <option value="0">Inativo</option>
+                        }
+                        else
+                        {
+                            <option value="0">Inativo</option>
+                            <option value="1">Ativo</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <br>
+                        <button type="submit" class="btn btn-primary col-md-2"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+                <!--ALERTAS-->
+                <div id="Alerta" class="alert alert-danger form-group col-md-12" role="alert" hidden>
+                    <strong> Campo <span id="NomeCampo"></span></strong> é necessário!
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------->
+
+    @section Scripts{
+        <script src="~/Scripts/acoes.js"></script>
+    }
+    @Html.ActionLink("Voltar página anterior", "Index")
+</body>
+</html>

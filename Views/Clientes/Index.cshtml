@@ -1,0 +1,45 @@
+﻿@{
+    List<ControleFinanc.Models.Clientes> md = ViewBag.Clientes;
+    ViewBag.Title = "Clientes";
+}
+
+@if (TempData["Sucesso"] != null)
+{
+    <div id="alerta" class="alert alert-success alert-dismissible" role="alert">
+        <strong>MENSAGEM: </strong> @TempData["Sucesso"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#alerta').alert('close');
+        }, 2000);
+    </script>
+}
+
+<div class="well jumbotron">
+    <h2 class="h1">Lista de Clientes</h2>
+    <hr class="table-bordered" />
+    @using (Ajax.BeginForm("Index", "Clientes", new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialClientes" }))
+    {
+        <div class="row">
+            <div class="col-md-2">
+                <a href="/Clientes/Novo" class="btn btn-primary">Inserir Novo</a>
+            </div>
+            <div class="col-md-4 col-md-offset-5">
+                <input type="text" class="form-control" name="Filtrar" placeholder="Pesquisar">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </div>
+        <hr />
+    }
+</div>
+@if (md != null)
+{
+    @Html.Partial("_Clientes", md)
+    @Scripts.Render("~/bundel/Jqueryval")
+}
+

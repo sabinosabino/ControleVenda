@@ -1,0 +1,263 @@
+﻿@{
+    List<ControleFinanc.Models.Estados> estados = ViewBag.Estados;
+    ControleFinanc.Models.Clientes md = ViewBag.Cliente;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Novo</title>
+    <link rel="stylesheet" href="~/Content/Site.css">
+</head>
+<body>
+    <br>
+    <div class="container">
+        <!--FORMULÁRIO-->
+        <form name="Clientes" method="POST" action="/Clientes/Excluir">
+            <div class="col-md-12 formulario1">
+                <br>
+                <div class="col-md-12 text-center bg-primary">
+                    <div class="col-md-1">
+                        <h2><span class="glyphicon glyphicon-user"></span></h2>
+                    </div>
+                    <div class="col-md-11">
+                        <h2>Excluir Cliente? </h2>
+                    </div>
+                </div>
+                <!--ALERTA-->
+                @if (TempData["Sucesso"] != null)
+                {
+                    <br />
+                    <br />
+                    <div id="alerta" class="alert alert-success alert-dismissible col-md-12" role="alert">
+                        <strong>MENSAGEM: </strong> @TempData["Sucesso"]
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <script type="text/javascript">
+                        setTimeout(function () {
+                            $('#alerta').alert('close');
+                        }, 3000);
+                    </script>
+                }
+                <!--Retorna o erro-->
+                @if (TempData["Erro"] != null)
+                {
+                    <script type="text/javascript">
+                        alert("@TempData["Erro"]");
+                        window.history.back();
+                    </script>
+                }
+                <!--id-->
+                <div class="col-md-6" hidden>
+                    <div class="form-group">
+                        <label for="Id">
+                            Id
+                        </label>
+                        <input type="text" class="form-control" id="Id"  name="Id"  value="@md.Id" placeholder="Informe o nome">
+                    </div>
+                </div>
+                <!--NOME-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Nome">
+                            Nome
+                        </label>
+                        <input type="text" class="form-control" id="Nome" value="@md.Nome" name="Nome"  placeholder="Informe o nome" disabled>
+                    </div>
+                </div>
+                <!--APELIDO-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Apelido">
+                            Apelido
+                        </label>
+                        <input type="text" class="form-control" id="Apelido" name="Apelido" placeholder="Informe o Apelido" value="@md.Apelido" disabled>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Tipo">
+                            Tipo
+                        </label>
+                        <select class="form-control" id="Tipo" name="Tipo" onchange="ValidacaoClientes()" disabled>
+                            @if (md.Tipo == "F")
+                            {
+                                <option value="F" selected>Física</option>
+                                <option value="J">Jurídica</option>
+                            }
+                            else
+                            {
+                                <option value="F">Física</option>
+                                <option value="J" selected>Jurídica</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <!--CPFCNPJ-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="CPF_CNPJ">
+                            CPF_CNPJ
+                        </label>
+                        <input type="text" class="form-control cpf_cnpj" id="cpf_cnpj" name="cpf_cnpj" placeholder="Informe o CPF_CNPJ" value="@md.Cpf_cnpj" disabled>
+                    </div>
+                </div>
+                <!--RG-->
+                <div class="col-md-4" >
+                    <div class="form-group">
+                        <label for="RG">
+                            RG
+                        </label>
+                        <input type="text" class="form-control" id="RG" name="RG"
+                               placeholder="Informe o RG" value="@md.Rg" disabled>
+                    </div>
+                </div>
+                <!--SspLocal-->
+                @if (estados != null)
+                {
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="SspLocal">
+                                SSP LOCAL
+                            </label>
+                            <select class="form-control" id="SspLocal" name="SspLocal" disabled>
+                                @{
+                                    foreach (var es in estados)
+                                    {
+                                        if (es.uf == md.SspLocal)
+                                        {
+                                            <option value="@es.uf" selected>@es.nome</option>
+                                        }
+                                        <option value="@es.uf">@es.nome</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                }
+                <!--ENDERECO-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="Endereco">
+                            Endereço
+                        </label>
+                        <input type="text" class="form-control" id="Endereco" name="Endereco" placeholder="Informe o Endereço" value="@md.Endereco" disabled>
+                    </div>
+                </div>
+                <!--BAIRRO-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Bairro">
+                            Bairro
+                        </label>
+                        <input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Informe o Bairro" value="@md.Bairro" disabled>
+                    </div>
+                </div>
+                <!--CIDADE-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Cidade">
+                            Cidade
+                        </label>
+                        <input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Informe o Cidade" value="@md.Cidade" disabled>
+                    </div>
+                </div>
+                <!--ESTADO-->
+                @if (estados != null)
+                {
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Estado">
+                                Estado
+                            </label>
+                            <select class="form-control" id="Estado" name="Estado" disabled>
+                                @{
+                                    foreach (var es in estados)
+                                    {
+                                        if (es.uf == md.Uf)
+                                        {
+                                            <option value="@es.uf" selected>@es.nome</option>
+                                        }
+                                        <option value="@es.uf">@es.nome</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                }
+
+                <!--CEP-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Cep">
+                            Cep
+                        </label>
+                        <input type="text" class="form-control Cep" id="Cep" name="Cep" placeholder="Informe o Cep" value="@md.Cep" disabled>
+                    </div>
+                </div>
+                <!--TELEFONES-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Telefone1">
+                            Telefone 1
+                        </label>
+                        <input type="text" class="form-control telefone" id="Telefone_1" value="@md.Telefone_1" name="Telefone_1"
+                               placeholder="Informe o Telefone" disabled>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Telefone2">
+                            Telefone 2
+                        </label>
+                        <input type="text" class="form-control telefone" id="Telefone_2" value="@md.Telefone_2" name="Telefone_2"
+                               placeholder="Informe o Telefone" disabled>
+                    </div>
+                </div>
+                <!--EMAIL-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Email">
+                            Email
+                        </label>
+                        <input type="email" class="form-control" id="Email" name="Email"
+                               placeholder="Informe o Email" value="@md.Email" disabled>
+                    </div>
+                </div>
+                <!--BOTÃO-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <br>
+                        <button type="submit" class="btn btn-danger col-md-2"><span class="glyphicon glyphicon-remove"></span> Excluir</button>                        <br />
+                        <br />
+                    </div>
+                </div>
+                <!--ALERTAS-->
+                <div id="Alerta" class="alert alert-danger form-group col-md-12" role="alert" hidden>
+                    <strong> Campo <span id="NomeCampo"></span></strong> é necessário!
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+    <!---------------------------------------------------------------------------------------------------------->
+
+    @section Scripts{
+
+        <script src="~/Scripts/acoes.js"></script>
+
+        <script>
+            ValidacaoClientes();
+        </script>
+
+    }
+    <br />
+    <br />
+    @Html.ActionLink("Voltar página anterior", "Index")
+</body>
+</html>

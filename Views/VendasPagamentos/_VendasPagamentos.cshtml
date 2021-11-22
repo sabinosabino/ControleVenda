@@ -1,0 +1,63 @@
+﻿@{ List<ControleFinanc.Models.VendasPagamentos> md = ViewBag.VendasPagamentos;}
+
+<div class="container">
+    <div class="row">
+        <!--Alterar id em partial novos-->
+        <div id="partialVendasPagamentos">
+            <table class="table table-condensed table-hover">
+                <tr>
+                    <td><strong>IDCLIENTE</strong></td>
+                    <td><strong>NOME CLIENTE</strong></td>
+                    <td><strong>VALOR EM VENDA</strong></td>
+                    <td><strong>VALOR RECEBIDO</strong></td>
+                    <td><strong>DIFERENÇA</strong></td>
+                    <td><strong>STATUS</strong></td>
+                </tr>
+                @{
+                    decimal valortotal = 0;
+                    decimal valortotalpago = 0;
+                    decimal diferenca = 0;
+                    string status = null;
+                    string classe = null;
+                    int total = 0;
+                    foreach (var vd in md)
+                    {
+                        if (vd.diferenca > 0)
+                        {
+                            status = "PENDENTE";
+                            classe = "pendente";
+                        }
+                        else
+                        {
+                            status = "-";
+                            classe = "ok";
+                        }
+                        <tr>
+                            <td><a href="#"><strong>@vd.idCliente.Id</strong></a></td>
+                            <td>@vd.idCliente.Nome</td>
+                            <td>@vd.valor_venda</td>
+                            <td>@vd.valor_pago</td>
+                            <td>@vd.diferenca</td>
+                            <td class="@classe">@status</td>
+
+                        </tr>
+                        valortotal = valortotal + vd.valor_venda;
+                        valortotalpago = valortotalpago + vd.valor_pago;
+                        diferenca = valortotal - valortotalpago;
+                        total++;
+                    }
+
+                    <tr class="bg-warning">
+                        <td><strong>Totais: @total</strong></td>
+                        <td></td>
+                        <td id="valortotal"><strong>@valortotal</strong></td>
+                        <td id="totalpago"><strong>@valortotalpago</strong></td>
+                        <td id="diferenca"><strong>@diferenca</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

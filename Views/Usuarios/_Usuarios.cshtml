@@ -1,0 +1,48 @@
+﻿@{ List<ControleFinanc.Models.Usuarios> usuarios = ViewBag.Usuarios;}
+
+<div class="container">
+    <div class="row">
+        <!--Alterar id em partial novos-->
+        <div id="partialUsuarios">
+            <table class="table table-condensed table-hover">
+                <tr>
+                    <td><strong>ID</strong></td>
+                    <td><strong>USUÁRIO</strong></td>
+                    <td><strong>NOME</strong></td>
+                    <td><strong>EMAIL</strong></td>
+                    <td><strong>GRUPO</strong></td>
+                    <td><strong>STATUS</strong></td>
+                    <td><img src="~/Content/Img/edit_pie_chart_report_30px.png" sizes="30px" /></td>
+                    <td><img src="~/Content/Img/delete_30px.png" sizes="30px" /></td>
+                </tr>
+
+                @foreach (var usuario in usuarios)
+                {
+                    string st;
+                    string cs;
+                    if (usuario.Status == 0)
+                    {
+                        st = "INATIVO";
+                        cs = "text-danger";
+                    }
+                    else
+                    {
+                        st = "ATIVO";
+                        cs = "text-success";
+                    }
+            <tr>
+                <td>@usuario.Id</td>
+                <td>@usuario.Usuario</td>
+                <td>@usuario.Nome</td>
+                <td>@usuario.Email</td>
+                <td>@usuario.Grupo.Nome</td>
+                <td class="@cs"><strong>@st</strong></td>
+                <td><a href="/Usuarios/Editar/@usuario.Id"><strong>Editar</strong></a></td>
+                <td><a href="/Usuarios/Excluir/@usuario.Id" class="text-danger"><strong>Excluir</strong></a></td>
+            </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

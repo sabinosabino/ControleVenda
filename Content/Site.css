@@ -1,0 +1,63 @@
+﻿body {
+    padding-top: 60px;
+    padding-bottom: 20px;
+    background-color: #d4d3d3;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 16px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/*  */
+
+.form-horizontal {
+    background-color: #e8e9e9;
+    box-shadow: 5px 5px 5px #0076a3;
+    -webkit-box-shadow: 0px 5px 5px #708090;
+    -moz-box-shadow: 0px 5px 10px;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    /* definimos o quão arredondado irá ficar nosso box */
+    border-radius: 20px;
+}
+
+.table {
+    background-color: white;
+    max-width: 1135px;
+}
+
+.Diaria {
+    font-size: 10px;
+}
+
+.formulario1 {
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    float: left;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(184,175,184,1);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(184,175,184,1);
+    box-shadow: 0px 3px 5px 0px rgba(184,175,184,1);
+    background-color: #ffffff;
+}
+
+.pendente{
+    color: red;
+    font-weight:bold;
+}
+.ok {
+    color: forestgreen;
+}
+
+.backgroudHome {
+    background-color: #4F5E5F
+}

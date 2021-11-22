@@ -1,0 +1,133 @@
+﻿@{
+    List<ControleFinanc.Models.Clientes> md = ViewBag.Clientes;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Novo</title>
+    <link rel="stylesheet" href="~/Content/Site.css">
+    <script src="~/Scripts/acoes.js"></script>
+</head>
+<body>
+    <br>
+    <div class="container">
+        <!--FORMULÁRIO-->
+        <form name="Vendas" method="POST" action="/Pagamentos/Novo" onsubmit="return ValidarCamposVendas();">
+            <div class="col-md-10 col-md-offset-1 formulario1">
+                <br>
+                <div class="col-md-12 text-center bg-primary">
+                    <div class="col-md-1">
+                        <h2><span class="glyphicon glyphicon-usd"></span></h2>
+                    </div>
+                    <div class="col-md-11">
+                        <h2>Lançamento de Pagamento </h2>
+                    </div>
+                </div>
+                <!--ALERTA-->
+                @if (TempData["Sucesso"] != null)
+                {
+                    <br />
+                    <br />
+                    <div id="alerta" class="alert alert-success alert-dismissible col-md-12" role="alert">
+                        <strong>MENSAGEM: </strong> @TempData["Sucesso"]
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <script type="text/javascript">
+                        setTimeout(function () {
+                            $('#alerta').alert('close');
+                        }, 3000);
+                    </script>
+                }
+                <!--Retorna o erro-->
+                @if (TempData["Erro"] != null)
+                {
+                    <script type="text/javascript">
+                        alert("@TempData["Erro"]");
+                        window.history.back();
+                    </script>
+                }
+
+                <!--DATA-->
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="data_venda">
+                            Data Venda
+                        </label>
+                        <input type="text" class="form-control date" id="data_venda" name="data_venda" placeholder="Informe a Data">
+                    </div>
+                </div>
+
+                @if (md != null)
+                {
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="Cliente">
+                                Cliente
+                            </label>
+                            <select class="form-control" id="Cliente" name="Cliente">
+                                @{
+                                    <option value="0" selected>Selecione</option>
+                                    foreach (var cli in md)
+                                    {
+                                        <option value="@cli.Id">@cli.Nome</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                }
+
+                <!--VALOR DA VENDA-->
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="valor_venda">
+                            Valor Pagamento
+                        </label>
+                        <input type="text" class="form-control moeda" id="valor_venda" name="valor_venda" placeholder="Informe a Valor">
+                    </div>
+                </div>
+                <!--DESCRIÇÃO-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="Detalhes_Venda">
+                            Detalhes Pagamento
+                        </label>
+                        <textarea class="form-control" id="Detalhes_Venda" name="Detalhes_Venda" placeholder="Informe detalhes"></textarea>
+
+                    </div>
+                </div>
+                <!--BOTÃO-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <br>
+                        <button type="submit" class="btn btn-primary col-md-2"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+                <!--ALERTAS-->
+                <div id="Alerta" class="alert alert-danger form-group col-md-12" role="alert" hidden>
+                    <strong> Campo <span id="NomeCampo"></span></strong> é necessário!
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+    <!---------------------------------------------------------------------------------------------------------->
+
+    @section Scripts{
+        <script>
+            ValidacaoVendas();
+            dataAtualFormatada();
+            valorInicial();
+        </script>
+
+    }
+    <br />
+    <br />
+    @Html.ActionLink("Voltar página anterior", "Index")
+</body>
+</html>
